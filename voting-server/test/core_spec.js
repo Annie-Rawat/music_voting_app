@@ -69,6 +69,23 @@ describe('application logic', ()=>{
 				entries: List('127 Hours', 'Transpotting', '28 Days Later')
 			}))	
 		})
+
+		it('finds final winner when only 2 entries are left', ()=>{
+			const state = Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later'),
+					tally: Map({
+						'Transpotting': 10,
+						'28 Days Later': 3,
+					})
+				}),
+				entries: List()
+			})
+			const nextState = next(state, 'Transpotting')
+			expect(nextState).to.equal(Map({
+				winner: 'Transpotting'
+			}))
+		
 	})
 
 	describe('vote', () => {
