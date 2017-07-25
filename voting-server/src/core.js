@@ -12,7 +12,7 @@ export function next(state){
 		return state.merge({
 			vote: Map({
 				pair: entries.take(2)
-			})
+			}),
 			entries: entries.skip(2)
 		})
 	}
@@ -30,7 +30,7 @@ function getWinner(vote){
 	if(!vote) return [];
 	const [a, b] = vote.get('pair'),
 		aVotes = vote.getIn(['tally', a],0),
-		bVotes = vote.getIn(['tally', b],0),
+		bVotes = vote.getIn(['tally', b],0);
 	if(aVotes > bVotes ) return [a];
 	else if( bVotes> aVotes) return [b];
 	else return [a, b]

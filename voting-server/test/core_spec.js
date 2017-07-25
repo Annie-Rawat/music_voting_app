@@ -4,6 +4,7 @@ import {expect} from 'chai'
 import {setEntries, next, vote} from '../src/core'
 
 describe('application logic', ()=>{
+
 	describe('setEntries', ()=>{
 		it('converts to immutable', ()=>{
 			const state = new Map();
@@ -13,7 +14,7 @@ describe('application logic', ()=>{
 				'entries': List.of('Transpotting', '28 Days Later')
 			}))
 		})
-	})
+	});
 
 	describe('next', ()=>{
 		it('takes the next 2 entries under vote', ()=>{
@@ -21,12 +22,12 @@ describe('application logic', ()=>{
 				entries: List.of('Transpotting', '28 Days Later', 'Sunshine')
 			})
 			const nextState = next(state);
-			expect(nextState).to.equal(Map{
+			expect(nextState).to.equal(Map({
 				vote: Map({
 					pair: List.of('Transpotting', '28 Days Later')
 				}),
 				entries: List.of('Sunshine')
-			})
+			}))
 
 		})
 
@@ -46,7 +47,7 @@ describe('application logic', ()=>{
 				vote: Map({
 					pair: List.of('Sunshine', 'Millions'),
 				}),
-				entries: List('127 Hours', 'Transpotting')
+				entries: List.of('127 Hours', 'Transpotting')
 			}))
 		})
 
@@ -66,7 +67,7 @@ describe('application logic', ()=>{
 				vote: Map({
 					pair: List.of('Sunshine', 'Millions'),
 				}),
-				entries: List('127 Hours', 'Transpotting', '28 Days Later')
+				entries: List.of('127 Hours', 'Transpotting', '28 Days Later')
 			}))	
 		})
 
@@ -85,8 +86,9 @@ describe('application logic', ()=>{
 			expect(nextState).to.equal(Map({
 				winner: 'Transpotting'
 			}))
+		})
 		
-	})
+	});
 
 	describe('vote', () => {
 		it('creates a tally for new vote', () => {
@@ -131,5 +133,5 @@ describe('application logic', ()=>{
 				entries: List()
 			}))
 		})
-	})
+	});
 })
