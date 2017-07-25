@@ -1,7 +1,7 @@
 import {List, Map} from 'immutable'
 import {expect} from 'chai'
 
-import {setEntries, next} from '../src/core'
+import {setEntries, next, vote} from '../src/core'
 
 describe('application logic', ()=>{
 	describe('setEntries', ()=>{
@@ -28,6 +28,51 @@ describe('application logic', ()=>{
 				entries: List.of('Sunshine')
 			})
 
+		})
+	})
+
+	describe('vote', () => {
+		it('creates a tally for new vote', () => {
+			const state = Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later')
+				}),
+				entries: List()
+			})
+			const nextState = vote(state, 'Transpotting')
+			expect(nextState).to.equal(Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later'),
+					tally: Map({
+						'Transpotting': 1
+					})
+				}),
+				entries: List()
+			}))
+		})
+
+		it('adds vote to tally', ()=>{
+			const state = Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later'),
+					tally: Map({
+						'Transpotting': 10,
+						'28 Days Later': 3,
+					})
+				}),
+				entries: List()
+			})
+			const nextState = vote(state, 'Transpotting')
+			expect(nextState).to.equal(Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later'),
+					tally: Map({
+						'Transpotting': 11,
+						'28 Days Later': 3,
+					})
+				}),
+				entries: List()
+			}))
 		})
 	})
 })
