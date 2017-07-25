@@ -5,7 +5,7 @@ export function setEntries(state, entries){
 }
 
 export function next(state){
-	const entries = state.get('entries');
+	const entries = state.get('entries').concat(getWinner(state.get('vote')));
 	return Map({
 		vote: Map({
 			pair: entries.take(2)
@@ -20,4 +20,14 @@ export function vote(state, entry){
 		0,
 		tally => tally + 1
 		)
+}
+
+function getWinner(vote){
+	if(!vote) return [];
+	const [a, b] = vote.get('pair'),
+		aVotes = vote.getIn(['tally', a],0),
+		bVotes = vote.getIn(['tally', b],0),
+	if(aVotes > bVotes ) return [a];
+	else if( bVotes> aVotes) return [b];
+	else return [a, b]
 }

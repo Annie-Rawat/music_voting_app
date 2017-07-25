@@ -29,6 +29,46 @@ describe('application logic', ()=>{
 			})
 
 		})
+
+		it('puts back winner into the list of entries', ()=>{
+			const state = Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later'),
+					tally: Map({
+						'Transpotting': 10,
+						'28 Days Later': 3,
+					})
+				}),
+				entries: List.of('Sunshine', 'Millions', '127 Hours')
+			})
+			const nextState = next(state)
+			expect(nextState).to.equal(Map({
+				vote: Map({
+					pair: List.of('Sunshine', 'Millions'),
+				}),
+				entries: List('127 Hours', 'Transpotting')
+			}))
+		})
+
+		it('puts both back into entries in case of a tie', ()=>{
+			const state = Map({
+				vote: Map({
+					pair: List.of('Transpotting', '28 Days Later'),
+					tally: Map({
+						'Transpotting': 3,
+						'28 Days Later': 3,
+					})
+				}),
+				entries: List.of('Sunshine', 'Millions', '127 Hours')
+			})
+			const nextState = next(state)
+			expect(nextState).to.equal(Map({
+				vote: Map({
+					pair: List.of('Sunshine', 'Millions'),
+				}),
+				entries: List('127 Hours', 'Transpotting', '28 Days Later')
+			}))	
+		})
 	})
 
 	describe('vote', () => {
