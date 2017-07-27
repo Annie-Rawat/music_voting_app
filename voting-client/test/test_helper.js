@@ -2,7 +2,7 @@ import jsdom from 'jsdom/lib/old-api';
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable'
 
-const doc = jsdom.jsdom('<!DOCTYPE html><html><body></body></html>'),
+const doc = jsdom.jsdom('<!doctype html><html><body></body></html>'),
 win = doc.defaultView;
 
 
@@ -14,5 +14,6 @@ Object.keys(window).forEach((key)=>{
 		global[key] = window[key] 
 	}
 })
+
 
 chai.use(chaiImmutable)
